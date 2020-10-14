@@ -53,4 +53,14 @@ export default {
             return res.status(400).json(error)
         }
     },
+
+    async delete(req: Request, res: Response) {
+
+        const { id } = req.params
+
+        const orphanagesRepository = getRepository(Orphanage)
+        await orphanagesRepository.delete(id)
+
+        return res.status(205).json({ message: "Orphanage deleted successfully!" })
+    }
 }
