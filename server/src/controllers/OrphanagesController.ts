@@ -13,6 +13,8 @@ export default {
             return { path: image.filename }
         })
 
+        req.body.open_on_weekends = req.body.open_on_weekends === 'true'
+
         const data = { ...req.body, images }
         await schema.validate(data, {
             abortEarly: false
@@ -26,7 +28,7 @@ export default {
         return res.status(201).json(orphanage)
     },
 
-    async index(res: Response) {
+    async index(req: Request, res: Response) {
         const orphanagesRepository = getRepository(Orphanage)
         const orphanages = await orphanagesRepository.find({
             relations: ['images']
